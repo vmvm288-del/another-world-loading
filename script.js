@@ -22,16 +22,19 @@ opacity:0
 const tl=gsap.timeline();
 
 
-// 1. 咒文書寫
+
+
+// 1 藍色刻印
+
 tl.to(
 "#spellPath path",
 {
 
 strokeDashoffset:0,
 
-duration:1.5,
+duration:1.2,
 
-stagger:.06,
+stagger:.035,
 
 ease:"power1.out"
 
@@ -39,154 +42,266 @@ ease:"power1.out"
 
 
 
-// 2. 藍→金
+
+// 2 突然染血
+
 .to(
 "#spellPath path",
 {
 
-stroke:"#ffd86b",
+stroke:"#c00000",
 
-fill:"#ffd86b",
+fill:"#c00000",
 
-duration:1.2,
+duration:.08,
 
-stagger:.015
-
-})
-
-
-
-// 3. 金霧醒來
-.to(
-".gold-mist",
-{
-
-opacity:.5,
-
-duration:1.5
-
-},"<")
-
-
-
-
-// 4. 咒文第一次發亮
-
-.to(
-"#spellPath",
-{
-
-filter:`
-
-drop-shadow(0 0 15px #ffd86b)
-drop-shadow(0 0 35px #ffd86b)
-drop-shadow(0 0 80px #ffe89a)
-
-`,
-
-duration:1.5
+stagger:0
 
 })
 
 
 
 
-// 5. 開始過載
+// 3 本體開始不對勁
 
 .to(
 "#spellPath",
 {
 
-scale:1.02,
+scale:1.05,
 
 filter:`
 
-drop-shadow(0 0 30px #ffd86b)
-drop-shadow(0 0 80px #ffe89a)
-drop-shadow(0 0 150px rgba(255,245,200,.55))
-drop-shadow(0 0 240px rgba(255,255,220,.35))
+drop-shadow(0 0 20px red)
+drop-shadow(0 0 60px #900)
+drop-shadow(0 0 120px rgba(255,0,0,.8))
 
 `,
 
-duration:2
-
-},"<")
-
-
-
-
-// 金霧同步變強
-
-.to(
-".gold-mist",
-{
-
-opacity:.9,
-
-filter:`
-blur(100px)
-brightness(1.2)
-`,
-
-duration:2
-
-},"<")
-
-
-
-
-// 整個空間被照亮
-
-.to(
-".portal-flash",
-{
-
-opacity:.45,
-
-duration:2
-
-},"<")
-
-
-
-
-// 最終爆發（維持，不收回）
-
-.to(
-"#spellPath",
-{
-
-scale:1.04,
-
-filter:`
-
-drop-shadow(0 0 50px #ffd86b)
-drop-shadow(0 0 120px #ffe89a)
-drop-shadow(0 0 220px rgba(255,245,220,.8))
-drop-shadow(0 0 420px rgba(255,255,255,.5))
-
-`,
-
-duration:2
+duration:.25
 
 })
 
 
 
-.to(
-".portal-flash",
+
+// 4 感染開始
+
+.call(()=>{
+
+function spawnRunes(
+count,
+delay,
+sizeMin,
+sizeMax
+){
+
+for(let i=0;i<count;i++){
+
+const rune=
+document.createElement("div");
+
+rune.className=
+"rune-copy";
+
+rune.innerText=
+"Ἐκ τοῦ αἵματος ἀνοίγω";
+
+document.body.appendChild(
+rune
+);
+
+
+
+
+// 完全隨機世界座標
+
+gsap.set(
+rune,
 {
 
-opacity:.85,
+left:
+gsap.utils.random(
+-40,
+130
+)+"vw",
 
-duration:2
+top:
+gsap.utils.random(
+-40,
+130
+)+"vh",
 
-},"<")
+scale:
+gsap.utils.random(
+sizeMin,
+sizeMax
+),
+
+rotation:
+gsap.utils.random(
+-100,
+100
+)
+
+});
 
 
 
 
-// 門完全打開
+// 出現
+
+gsap.fromTo(
+rune,
+
+{
+
+opacity:0,
+
+scale:.1
+
+},
+
+{
+
+opacity:
+gsap.utils.random(
+.45,
+1
+),
+
+scale:
+gsap.utils.random(
+2,
+15
+),
+
+duration:.25,
+
+delay:i*delay,
+
+ease:"power2.out"
+
+});
+
+}
+
+}
+
+
+
+// 慢
+
+spawnRunes(
+1,
+0,
+1,
+2
+);
+
+setTimeout(()=>{
+
+spawnRunes(
+2,
+.2,
+1,
+2
+)
+
+},600);
+
+
+setTimeout(()=>{
+
+spawnRunes(
+5,
+.08,
+1,
+3
+)
+
+},1200);
+
+
+setTimeout(()=>{
+
+spawnRunes(
+15,
+.03,
+1,
+4
+)
+
+},1700);
+
+
+
+
+// 爆
+
+setTimeout(()=>{
+
+spawnRunes(
+120,
+.001,
+1,
+10
+)
+
+},2200);
+
+})
+
+
+
+
+// 故障開始
+
+.to(
+".rune-copy",
+{
+
+x:"random(-150,150)",
+
+y:"random(-150,150)",
+
+rotation:"random(-60,60)",
+
+duration:.05,
+
+repeat:12,
+
+yoyo:true
+
+})
+
+
+
+
+// 開始巨大化
+
+.to(
+".rune-copy",
+{
+
+scale:
+()=>gsap.utils.random(
+100,
+260
+),
+
+duration:2,
+
+stagger:.0005,
+
+ease:"expo.in"
+
+},"-=1")
+
+
+
+
+// 整個世界開始被紅色覆蓋
 
 .to(
 ".portal-flash",
@@ -194,63 +309,118 @@ duration:2
 
 opacity:1,
 
-duration:1.5
+background:"#990000",
+
+duration:1
 
 },"<")
 
 
 
-// 空間被金光吞掉
-
 .to(
-"body",
+".gold-mist",
 {
 
-background:`
+opacity:1,
 
-radial-gradient(
+filter:`
 
-circle,
+blur(300px)
 
-#fffbe8 0%,
-
-#ffe9a5 25%,
-
-#ffd66d 55%,
-
-#d49d1d 100%
-
-)
+brightness(.3)
 
 `,
 
-duration:2
+duration:1.2
 
 },"<")
 
 
 
 
-// 展開瞬間：符文被光吞掉
+// 所有文字衝出畫面
+
+.to(
+".rune-copy",
+{
+
+scale:500,
+
+rotation:
+"random(-360,360)",
+
+x:
+"random(-10000,10000)",
+
+y:
+"random(-10000,10000)",
+
+opacity:0,
+
+duration:.4,
+
+stagger:.0005
+
+})
+
+
+
+
+// 主咒文一起被撕裂
 
 .to(
 "#spellPath",
 {
 
-scale:1.08,
+scale:30,
 
 opacity:0,
 
-filter:`
+duration:.2
 
-drop-shadow(0 0 80px #ffd86b)
-drop-shadow(0 0 180px #fff1b0)
-drop-shadow(0 0 350px rgba(255,255,255,.95))
+},"<")
 
-`,
 
-duration:.9,
 
-ease:"power2.out"
 
-},"-=2")
+// 啪
+
+.to(
+"body",
+{
+
+background:"black",
+
+duration:.08
+
+})
+
+
+
+
+// 清場
+
+.call(()=>{
+
+document
+.querySelectorAll(
+".rune-copy"
+)
+
+.forEach(
+e=>e.remove()
+)
+
+})
+
+
+
+.to(
+".gold-mist,.portal-flash",
+{
+
+opacity:0,
+
+duration:.1
+
+},"<")

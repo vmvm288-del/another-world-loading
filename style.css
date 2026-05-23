@@ -26,7 +26,7 @@ radial-gradient(
 circle,
 
 #071018 0%,
-#020305 60%,
+#180000 40%,
 black 100%
 
 );
@@ -35,7 +35,7 @@ black 100%
 
 
 
-/* 空氣薄霧 */
+/* 血色空氣 */
 
 body::before{
 
@@ -51,14 +51,14 @@ radial-gradient(
 
 circle,
 
-rgba(120,220,255,.05),
+rgba(180,0,0,.06),
 
-transparent 60%
+transparent 70%
 
 );
 
 animation:
-mist 8s ease infinite;
+mist 4s infinite;
 
 pointer-events:none;
 
@@ -68,21 +68,19 @@ z-index:0;
 
 
 
-/* 主區 */
+
 
 .intro{
 
 position:relative;
 
-perspective:1200px;
-
-z-index:5;
+z-index:10;
 
 }
 
 
 
-/* 咒文 */
+
 
 .spell-svg{
 
@@ -91,18 +89,11 @@ height:300px;
 
 overflow:visible;
 
-transform:
-perspective(1200px)
-rotateX(-8deg);
-
-transform-style:
-preserve-3d;
-
 }
 
 
 
-/* SVG */
+
 
 #spellPath{
 
@@ -116,123 +107,144 @@ stroke-linejoin:round;
 
 stroke-linecap:round;
 
+transform-origin:center center;
+
 filter:
 
 drop-shadow(
-0 0 4px rgba(114,223,255,.5)
-)
-
-drop-shadow(
-0 0 10px rgba(114,223,255,.25)
+0 0 8px rgba(100,200,255,.4)
 );
 
 }
 
 
 
-/* 金霧 */
+
+
+/* 血霧 */
 
 .gold-mist{
 
-position:absolute;
-
-top:-60px;
-left:-10%;
-
-width:120%;
-height:280px;
-
-opacity:0;
-
-pointer-events:none;
-
-background:
-
-radial-gradient(
-
-circle,
-
-rgba(255,230,140,.08) 0%,
-
-rgba(255,220,100,.15) 30%,
-
-rgba(255,190,60,.18) 55%,
-
-rgba(255,150,0,.06) 80%,
-
-transparent 100%
-
-);
-
-filter:
-blur(60px);
-
-z-index:1;
-
-}
-
-
-
-/* 空間金光 */
-
-.portal-flash{
-
 position:fixed;
 
-inset:0;
+inset:-50%;
 
 opacity:0;
 
 pointer-events:none;
 
-z-index:999;
-
-/* 關鍵 */
-
-mix-blend-mode:screen;
+z-index:20;
 
 background:
 
 linear-gradient(
 
-180deg,
+90deg,
 
-rgba(255,235,180,.08) 0%,
+#220000 0%,
 
-rgba(255,220,120,.10) 35%,
+#5c0000 20%,
 
-rgba(255,190,80,.08) 70%,
+#8d0000 40%,
 
-rgba(255,150,30,.04) 100%
+#680000 60%,
 
+#320000 100%
+
+);
+
+filter:
+blur(160px);
+
+}
+
+
+
+
+
+.portal-flash{
+
+position:fixed;
+inset:0;
+
+opacity:0;
+
+background:#680000;
+
+z-index:80;
+
+}
+
+
+
+
+
+/* 符文污染 */
+
+.rune-copy{
+
+position:fixed;
+
+left:50%;
+top:50%;
+
+font-size:90px;
+
+font-weight:bold;
+
+font-family:
+"Times New Roman",
+serif;
+
+color:#d00000;
+
+white-space:nowrap;
+
+opacity:0;
+
+z-index:100;
+
+transform-origin:center;
+
+filter:
+
+blur(.4px)
+
+drop-shadow(
+0 0 12px red
+)
+
+drop-shadow(
+0 0 40px #800
+)
+
+drop-shadow(
+0 0 90px rgba(255,0,0,.9)
 );
 
 }
 
 
 
-/* 呼吸 */
+
 
 @keyframes mist{
 
 0%{
 
-opacity:.4;
-transform:scale(1);
+opacity:.2;
 
 }
 
 50%{
 
-opacity:.75;
-transform:scale(1.08);
+opacity:.9;
 
 }
 
 100%{
 
-opacity:.4;
-transform:scale(1);
+opacity:.2;
 
 }
 

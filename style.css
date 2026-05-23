@@ -1,0 +1,239 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+
+height:100vh;
+overflow:hidden;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+position:relative;
+
+font-family:
+"Times New Roman",
+serif;
+
+background:
+
+radial-gradient(
+
+circle,
+
+#071018 0%,
+#020305 60%,
+black 100%
+
+);
+
+}
+
+
+
+/* 空氣薄霧 */
+
+body::before{
+
+content:"";
+
+position:absolute;
+
+inset:0;
+
+background:
+
+radial-gradient(
+
+circle,
+
+rgba(120,220,255,.05),
+
+transparent 60%
+
+);
+
+animation:
+mist 8s ease infinite;
+
+pointer-events:none;
+
+z-index:0;
+
+}
+
+
+
+/* 主區 */
+
+.intro{
+
+position:relative;
+
+perspective:1200px;
+
+z-index:5;
+
+}
+
+
+
+/* 咒文 */
+
+.spell-svg{
+
+width:1000px;
+height:300px;
+
+overflow:visible;
+
+transform:
+perspective(1200px)
+rotateX(-8deg);
+
+transform-style:
+preserve-3d;
+
+}
+
+
+
+/* SVG */
+
+#spellPath{
+
+fill:none;
+
+stroke:#72dfff;
+
+stroke-width:2;
+
+stroke-linejoin:round;
+
+stroke-linecap:round;
+
+filter:
+
+drop-shadow(
+0 0 4px rgba(114,223,255,.5)
+)
+
+drop-shadow(
+0 0 10px rgba(114,223,255,.25)
+);
+
+}
+
+
+
+/* 金霧 */
+
+.gold-mist{
+
+position:absolute;
+
+top:-60px;
+left:-10%;
+
+width:120%;
+height:280px;
+
+opacity:0;
+
+pointer-events:none;
+
+background:
+
+radial-gradient(
+
+circle,
+
+rgba(255,230,140,.08) 0%,
+
+rgba(255,220,100,.15) 30%,
+
+rgba(255,190,60,.18) 55%,
+
+rgba(255,150,0,.06) 80%,
+
+transparent 100%
+
+);
+
+filter:
+blur(60px);
+
+z-index:1;
+
+}
+
+
+
+/* 空間金光 */
+
+.portal-flash{
+
+position:fixed;
+
+inset:0;
+
+opacity:0;
+
+pointer-events:none;
+
+z-index:999;
+
+/* 關鍵 */
+
+mix-blend-mode:screen;
+
+background:
+
+linear-gradient(
+
+180deg,
+
+rgba(255,235,180,.08) 0%,
+
+rgba(255,220,120,.10) 35%,
+
+rgba(255,190,80,.08) 70%,
+
+rgba(255,150,30,.04) 100%
+
+);
+
+}
+
+
+
+/* 呼吸 */
+
+@keyframes mist{
+
+0%{
+
+opacity:.4;
+transform:scale(1);
+
+}
+
+50%{
+
+opacity:.75;
+transform:scale(1.08);
+
+}
+
+100%{
+
+opacity:.4;
+transform:scale(1);
+
+}
+
+}
